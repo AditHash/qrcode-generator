@@ -2,16 +2,24 @@ version: "3.8"
 services:
   frontend:
     build:
-      context: ./frontend  # Path to your React Vite project
+      context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - "80:80"  # Map host port 80 to container port 80
-    depends_on:
-      - backend
+    expose:
+      - "80"  # Expose frontend internally
 
   backend:
     build:
-      context: ./backend  # Path to your FastAPI project
+      context: ./backend
       dockerfile: Dockerfile
+    expose:
+      - "8000"  # Expose backend internally
+
+  nginx:
+    image: nginx:alpine
     ports:
-      - "8000:8000"  # Map host port 8000 to container port 8000
+      - "8080:80"  # Expose Nginx on port 8080
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - backend

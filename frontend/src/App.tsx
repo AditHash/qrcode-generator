@@ -23,7 +23,7 @@ function App() {
       // });
 
       // for deployment in docker uncomment below code
-      const response = await fetch('http://backend:8000/generate-qr', {
+      const response = await fetch('/api/generate-qr', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

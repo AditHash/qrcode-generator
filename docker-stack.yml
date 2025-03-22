@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  frontend:
+    image: your-dockerhub-username/qrcode-frontend:latest  # Replace with your Docker Hub image
+    ports:
+      - "80:80"
+    deploy:
+      replicas: 2  # Run 2 replicas of the frontend service
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - backend
+
+  backend:
+    image: your-dockerhub-username/qrcode-backend:latest  # Replace with your Docker Hub image
+    ports:
+      - "8000:8000"
+    deploy:
+      replicas: 2  # Run 2 replicas of the backend service
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
